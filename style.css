@@ -66,8 +66,63 @@ body {
     background: #0d47a1;
 }
 
+.radio-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-bottom: 15px;
+}
+.radio-group label {
+    font-weight: 500;
+    text-align: center;
+    color: #333;
+    background: #f7f8ff;
+    padding: 6px 0;
+    border-radius: 10px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.radio-group label:hover {
+    background: #e8edff;
+}
+.radio-group input[type="radio"] {
+    margin-right: 6px;
+    accent-color: #1a73e8;
+}
 .ticket {
     font-family: "Times New Roman", Times, serif;
+    background: linear-gradient(135deg, #f0f6ff, #ffffff);
+    border: 2px dashed #1a73e8;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.ticket h3 {
+    color: #1a237e;
+    margin-bottom: 10px;
+}
+.ticket p {
+    color: #333;
+    font-size: 0.95rem;
+    margin: 5px 0;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    resize: vertical;
+    margin-bottom: 15px;
+    transition: border-color 0.2s;
+}
+textarea:focus {
+    border-color: #1a73e8;
+    outline: none;
 }
 
 /* HIGHLIGHTS */
@@ -156,7 +211,7 @@ footer {
     justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
-    padding: 30px 20px;
+    padding: 0px 20px;
     overflow-y: auto;
 }
 
@@ -164,9 +219,8 @@ footer {
     background: #fff;
     border-radius: 20px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-    padding: 40px 30px;
-    width: 90%;
-    max-width: 400px;
+    padding: 40px 40px;
+    max-width: 600px;
     text-align: left;
     margin: 60px 0;
 }
@@ -187,7 +241,7 @@ footer {
 form label {
     display: block;
     margin-bottom: 5px;
-    color: #333;
+    color: #000000;
     font-weight: 500;
 }
 
@@ -235,7 +289,7 @@ body.event-body {
     text-align: center;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
     padding: 30px;
-    max-width: 850px;
+    max-width: 950px;
     transition: all 0.3s ease;
 }
 
@@ -382,7 +436,6 @@ body.event-body {
     background: linear-gradient(135deg, #9e9e9e, #757575);
 }
 
-
 .workshop-details {
     border-top: 2px solid #ddd;
     background: #ffffff;
@@ -428,6 +481,14 @@ body.event-body {
     border-radius: 15px;
     margin-bottom: 25px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.bonus-section:hover {
+    background: #e0e5ff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
 }
 
 .bonus-section h3 {
@@ -465,32 +526,6 @@ body.event-body {
 
 .event-extra-info a:hover {
     text-decoration: underline;
-}
-
-.radio-group {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.radio-group label {
-    font-weight: 200;
-    text-align: center;
-    color: #333;
-    background: #f7f8ff;
-    border-radius: 10px;
-    transition: 0.2s;
-    cursor: pointer;
-}
-
-.radio-group label:hover {
-    background: #e8edff;
-}
-
-.radio-group input[type="radio"] {
-    margin-right: 6px;
-    accent-color: #1a73e8;
 }
 
 footer {

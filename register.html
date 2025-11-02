@@ -3,38 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register | Team Shunte Chai Workshop</title>
+  <title>Register | Team Shunte Chai Event</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body class="form-body">
   <div class="form-container" id="formSection">
-    <h2 class="title">Workshop Registration</h2>
+    <h2 class="title">Registration Form</h2>
     <p class="subtitle">Fill in your details below to register</p>
 
     <form id="googleForm">
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="you@example.com" required />
-
       <label for="name">Full Name</label>
       <input type="text" id="name" placeholder="Your full name" required />
 
-      <label for="phone">Phone</label>
-      <input type="text" id="phone" placeholder="01XXXXXXXXX" required />
+      <label for="studentId">Student ID</label>
+      <input type="text" id="studentId" placeholder="Your student ID" required />
 
-      <label for="university">University</label>
-      <input type="text" id="university" placeholder="Your university name" required />
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com" required />
 
-      <label>Are you committed to attend the session?</label>
+      <label for="q1">1. Why do you want to attend the workshop?</label>
+      <textarea id="q1" placeholder="Write a short answer..." rows="2" required></textarea>
+
+      <label for="q2">2. Do you have any previous experience in filmmaking or script writing?</label>
+      <textarea id="q2" placeholder="Write briefly..." rows="2" required></textarea>
+
+      <label for="q3">3. Give a small synopsis of the story you have written (if any).</label>
+      <textarea id="q3" placeholder="Write your short synopsis..." rows="2"></textarea>
+
+      <label for="bkashId">Bkash Transaction ID</label>
+      <input type="text" id="bkashId" placeholder="Bkash TrxID" required />
+
+      <label>Have you checked all information before submission?</label>
       <div class="radio-group">
-        <label><input type="radio" name="attendance" value="Yes" required /> Yes</label>
-        <label><input type="radio" name="attendance" value="No" /> No</label>
+        <label><input type="radio" name="check" value="Yes" required /> Yes</label>
+        <label><input type="radio" name="check" value="No" /> No</label>
       </div>
 
       <button type="submit" class="btn-primary">Register</button>
     </form>
-
 
     <p id="msg" class="note"></p>
   </div>
@@ -46,10 +54,10 @@
     <p class="subtitle">Your entry ticket is ready below:</p>
 
     <div id="ticket" class="ticket">
-      <h3>🎟️ Workshop Entry Ticket</h3>
+      <h3>🎟️ Event Entry Ticket</h3>
       <p><strong>Name:</strong> <span id="ticketName"></span></p>
-      <p><strong>University:</strong> <span id="ticketUni"></span></p>
-      <p><strong>Time:</strong> 3:30 - 5:00 PM</p>
+      <p><strong>ID:</strong> <span id="ticketId"></span></p>
+      <p><strong>Transaction:</strong> <span id="ticketBkash"></span></p>
       <p><strong>Date:</strong> October 25, 2025</p>
       <p><strong>Venue:</strong> BRAC University</p>
       <p><strong>Room:</strong> B block, 8th floor (8B-7C)</p>
@@ -60,7 +68,7 @@
   </div>
 
   <footer>
-    <p>© 2025 Team Shunte Chai Workshop· Built for Workshop Registration</p>
+    <p>© 2025 BUFC Workshop· Built for Workshop Registration</p>
   </footer>
 
   <script>
@@ -73,20 +81,23 @@
       e.preventDefault();
 
       const name = document.getElementById("name").value.trim();
+      const studentId = document.getElementById("studentId").value.trim();
       const email = document.getElementById("email").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const university = document.getElementById("university").value.trim();
-
-      const googleFormURL = "https://corsproxy.io/?" + encodeURIComponent("https://script.google.com/macros/s/AKfycbxo45gTD1GJ6V1PF_gZb7yUX_uGqmZkheWJsJxiCwLaeGkZVqfyM_CdgYESElFqyL-2/exec");
-
-      const attendance = document.querySelector('input[name="attendance"]:checked')?.value || "";
-      const data = { name, email, phone, university, attendance };
-
+      const q1 = document.getElementById("q1").value.trim();
+      const q2 = document.getElementById("q2").value.trim();
+      const q3 = document.getElementById("q3").value.trim();
+      const bkashId = document.getElementById("bkashId").value.trim();
+      const check = document.querySelector('input[name="check"]:checked')?.value || "";
+      
+      const googleSheetScript = "https://corsproxy.io/?" + encodeURIComponent("https://script.google.com/macros/s/AKfycbwU6CyFjh6T5116ChaDu6X2vVw6g4JUo_irVVayrxJE-XOV25kL9Wz9ocAvKT2s_7rk/exec");
+      
+      const data = { name, studentId, email, q1, q2, q3, bkashId, check };
+  
       msg.textContent = "Submitting...";
       msg.style.color = "#555";
 
       try {
-        const response = await fetch(googleFormURL, {
+        const response = await fetch(googleSheetScript, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
@@ -99,7 +110,8 @@
 
         document.getElementById("userName").textContent = name;
         document.getElementById("ticketName").textContent = name;
-        document.getElementById("ticketUni").textContent = university;
+        document.getElementById("ticketId").textContent = studentId;
+        document.getElementById("ticketBkash").textContent = bkashId;
 
         form.reset();
       } catch (error) {
@@ -109,7 +121,7 @@
       }
     });
 
-    // Download ticket as JPG
+    // 🎟️ Download ticket as JPG
     document.getElementById("downloadBtn").addEventListener("click", () => {
       const ticketEl = document.getElementById("ticket");
 
@@ -119,34 +131,11 @@
         backgroundColor: "#ffffff",
       }).then((canvas) => {
         const link = document.createElement("a");
-        link.download = "Workshop_Ticket.jpg";
+        link.download = "Event_Ticket.jpg";
         link.href = canvas.toDataURL("image/jpeg", 1.0);
         link.click();
       });
     });
-
-
   </script>
-
-  <style>
-    .ticket {
-      background: linear-gradient(135deg, #f0f6ff, #ffffff);
-      border: 2px dashed #1a73e8;
-      border-radius: 15px;
-      padding: 20px;
-      margin: 20px 0;
-      text-align: left;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    .ticket h3 {
-      color: #1a237e;
-      margin-bottom: 10px;
-    }
-    .ticket p {
-      color: #333;
-      font-size: 0.95rem;
-      margin: 5px 0;
-    }
-  </style>
 </body>
 </html>
